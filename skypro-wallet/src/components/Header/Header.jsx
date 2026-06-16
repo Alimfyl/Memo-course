@@ -1,42 +1,52 @@
-import { Link } from "react-router-dom";
+import {
 
-import "./Header.css";
+Container,
 
-function Header() {
+Logo,
 
-return (
+Navigation,
 
-<header className="header">
+NavLink
 
-<div className="logo">
+}
+
+from "./Header.styled";
+
+function Header(){
+
+return(
+
+<Container>
+
+<Logo>
 
 SkyproWallet
 
-</div>
+</Logo>
 
-<nav>
+<Navigation>
 
-<Link to="/expenses">
+<NavLink to="/expenses">
 
 Мои расходы
 
-</Link>
+</NavLink>
 
-<Link to="/analytics">
+<NavLink to="/analytics">
 
 Анализ расходов
 
-</Link>
+</NavLink>
 
-<Link to="/login">
+<NavLink to="/login">
 
 Выйти
 
-</Link>
+</NavLink>
 
-</nav>
+</Navigation>
 
-</header>
+</Container>
 
 )
 
