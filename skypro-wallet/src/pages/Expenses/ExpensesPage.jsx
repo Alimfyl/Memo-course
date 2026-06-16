@@ -1,50 +1,57 @@
-import { useState, useEffect } from "react";
-import { Outlet } from "react-router-dom";
-import { fetchTasks } from "../../api/tasks";
-import Header from "../../components/Header/Header";
-import Main from "../../components/Main/Main";
+import Header
 
-function MainPage() {
-  const [cards, setCards] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+from "../../components/Header/Header";
 
-  const refreshTasks = () => {
-    fetchTasks ()
-    .then((data) => {
-      setCards(data);
-    })
-    .catch((err) => {
-      setError(err.message);
-    })
-    .finally(() => {
-      setIsLoading(false);
-    });
-  }
+import ExpenseTable
 
-  useEffect (() =>{
-  refreshTasks();
-}, [] );
-  return (
-    <div className="wrapper">
-        
-      <Outlet context={{ cards, refreshTasks }} /> 
+from "../../components/ExpenseTable/ExpenseTable";
 
-      <Header />
+import ExpenseForm
 
-      {error && (
-        <p style={{color:"red", textAlign: "center", marginTop: "20px"}}>
-          {error}
-        </p>
-      )}
+from "../../components/ExpenseForm/ExpenseForm";
 
-      {isLoading ? (
-        <p style={{ textAlign: "center", marginTop: "50px" }}>Данные загружаются...</p>
-      ) : (
-        <Main cards={cards} />
-      )}
-    </div>
-  );
+import {
+
+Wrapper,
+
+Content,
+
+Left,
+
+Right
+
 }
 
-export default MainPage;
+from "./ExpensesPage.styled";
+
+function ExpensesPage(){
+
+return(
+
+<Wrapper>
+
+<Header/>
+
+<Content>
+
+<Left>
+
+<ExpenseTable/>
+
+</Left>
+
+<Right>
+
+<ExpenseForm/>
+
+</Right>
+
+</Content>
+
+</Wrapper>
+
+)
+
+}
+
+export default ExpensesPage;
