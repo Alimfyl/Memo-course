@@ -16,13 +16,9 @@ font-family:Arial,sans-serif;
 
 body{
 
-background:#F5F5F7;
+background:#F4F5F7;
 
-}
-
-a{
-
-text-decoration:none;
+color:#222;
 
 }
 

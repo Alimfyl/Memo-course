@@ -1,13 +1,10 @@
-import styled from "styled-components";
-import { Link } from "react-router-dom";
-
 export const Container = styled.header`
 
 height:90px;
 
-padding:0 40px;
+padding:0 60px;
 
-background:#fff;
+background:white;
 
 display:flex;
 
@@ -15,13 +12,17 @@ justify-content:space-between;
 
 align-items:center;
 
-box-shadow:0 2px 8px rgba(0,0,0,.08);
+box-shadow:
+
+0 4px 25px
+
+rgba(0,0,0,.05);
 
 `;
 
 export const Logo = styled.div`
 
-font-size:32px;
+font-size:34px;
 
 font-weight:700;
 
@@ -33,13 +34,13 @@ export const Navigation = styled.nav`
 
 display:flex;
 
-gap:40px;
+gap:50px;
 
 `;
 
 export const NavLink = styled(Link)`
 
-color:#222;
+color:#444;
 
 font-size:18px;
 

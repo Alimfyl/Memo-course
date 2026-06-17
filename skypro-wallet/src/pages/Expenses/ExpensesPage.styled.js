@@ -5,10 +5,21 @@ min-height: 100vh;
 `;
 
 export const Content = styled.div`
-display: flex;
+
+display:flex;
+
 gap:30px;
-padding: 40px;
-align-items: flex-start;
+
+padding:40px;
+
+align-items:flex-start;
+
+@media(max-width:900px){
+
+flex-direction:column;
+
+}
+
 `;
 
 export const Left = styled.div`

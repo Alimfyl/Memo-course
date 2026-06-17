@@ -1,19 +1,19 @@
 import Header from '../../components/Header/Header';
 import Calendar from '../../components/Calendar/Calendar';
 import Chart from '../../components/Chart/Chart';
-import { Wrapper, Container, Left, Right } from './AnalysticsPage.styled';
+import { Wrapper, Content, Left, Right } from './AnalysticsPage.styled';
 
 const AnalyticsPage = () => {
   return (
     <Wrapper>
-      <Container>
+      <Content>
         <Left>
           <Calendar />
         </Left>
         <Right>
           <Chart />
         </Right>
-      </Container>
+      </Content>
     </Wrapper>
   );
 };
