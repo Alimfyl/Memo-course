@@ -1,28 +1,32 @@
-import styled from "styled-components";
+import styled
 
-export const StyledButton = styled.button`
+from "styled-components";
+
+export const StyledButton=
+
+styled.button`
 
 width:100%;
 
-height:52px;
+height:28px;
 
-border:none;
+background:
 
-border-radius:12px;
-
-background:#6C5CE7;
+#8F5BFF;
 
 color:white;
 
-font-size:16px;
+border-radius:4px;
+
+font-size:10px;
 
 font-weight:600;
 
-transition:.3s;
+transition:.2s;
 
 &:hover{
 
-opacity:.85;
+opacity:.9;
 
 }
 

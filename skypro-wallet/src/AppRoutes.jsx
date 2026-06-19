@@ -6,17 +6,15 @@ Route,
 
 Navigate
 
-}
-
-from "react-router-dom";
+} from "react-router-dom";
 
 import LoginPage from "./pages/LoginPage/LoginPage";
 
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
 
-import ExpensesPage from "./pages/ExpensesPage/ExpensesPage";
+import ExpensesPage from "./pages/Expenses/ExpensesPage";
 
-import AnalyticsPage from "./pages/AnalyticsPage/AnalyticsPage";
+import AnalyticsPage from "./pages/Analytics/AnalyticsPage";
 
 function AppRoutes(){
 

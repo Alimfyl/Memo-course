@@ -1,6 +1,6 @@
 import AppRoutes from "./AppRoutes";
 
-import GlobalStyles from "./styles/GlobalStyles";
+import GlobalStyles from "./styles/GlobalStyles.styled";
 
 function App(){
 

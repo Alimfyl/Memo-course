@@ -14,6 +14,10 @@ import {
 
 Wrapper,
 
+Container,
+
+Title,
+
 Content,
 
 Left,
@@ -32,6 +36,14 @@ return(
 
 <Header/>
 
+<Container>
+
+<Title>
+
+Мои расходы
+
+</Title>
+
 <Content>
 
 <Left>
@@ -47,6 +59,8 @@ return(
 </Right>
 
 </Content>
+
+</Container>
 
 </Wrapper>
 

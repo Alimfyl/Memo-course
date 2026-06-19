@@ -1,11 +1,30 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Wrapper = styled.div`
-min-height: 100vh;
-`;
-export const Content = styled.div`
 
-padding:40px;
+min-height:100vh;
+
+`;
+
+export const Container = styled.div`
+
+max-width:1100px;
+
+margin:40px auto;
+
+`;
+
+export const Title = styled.h1`
+
+font-size:24px;
+
+font-weight:700;
+
+margin-bottom:30px;
+
+`;
+
+export const Content = styled.div`
 
 display:flex;
 
@@ -20,9 +39,15 @@ flex-direction:column;
 }
 
 `;
+
 export const Left = styled.div`
-flex: 1;
+
+width:320px;
+
 `;
+
 export const Right = styled.div`
-flex: 2;
+
+flex:1;
+
 `;

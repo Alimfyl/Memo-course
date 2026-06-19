@@ -6,13 +6,27 @@ Logo,
 
 Navigation,
 
-NavLink
+NavLink,
+
+Logout
 
 }
 
 from "./Header.styled";
 
+import {
+
+useLocation
+
+}
+
+from "react-router-dom";
+
 function Header(){
+
+const location=
+
+useLocation();
 
 return(
 
@@ -20,31 +34,75 @@ return(
 
 <Logo>
 
-SkyproWallet
+💳 Skypro Wallet
 
 </Logo>
 
 <Navigation>
 
-<NavLink to="/expenses">
+<NavLink
+
+to="/expenses"
+
+className={
+
+location.pathname
+
+==="/expenses"
+
+?
+
+"active"
+
+:
+
+""
+
+}
+
+>
 
 Мои расходы
 
 </NavLink>
 
-<NavLink to="/analytics">
+<NavLink
+
+to="/analytics"
+
+className={
+
+location.pathname
+
+==="/analytics"
+
+?
+
+"active"
+
+:
+
+""
+
+}
+
+>
 
 Анализ расходов
 
 </NavLink>
 
-<NavLink to="/login">
+</Navigation>
+
+<Logout
+
+to="/login"
+
+>
 
 Выйти
 
-</NavLink>
-
-</Navigation>
+</Logout>
 
 </Container>
 

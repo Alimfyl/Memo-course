@@ -1,14 +1,26 @@
-import { Link }
+import {
 
-from "react-router-dom";
+Link,
+
+useNavigate
+
+}
+
+from
+
+"react-router-dom";
 
 import Button
 
-from "../../components/Button/Button";
+from
+
+"../../components/Button/Button";
 
 import Input
 
-from "../../components/Input/Input";
+from
+
+"../../components/Input/Input";
 
 import {
 
@@ -18,13 +30,21 @@ Card,
 
 Title,
 
-Text
+Form,
+
+Bottom
 
 }
 
-from "./LoginPage.styled";
+from
+
+"./LoginPage.styled";
 
 function LoginPage(){
+
+const navigate=
+
+useNavigate();
 
 return(
 
@@ -37,6 +57,8 @@ return(
 Вход
 
 </Title>
+
+<Form>
 
 <Input
 
@@ -52,17 +74,31 @@ placeholder="Пароль"
 
 />
 
-<Button>
+<Button
+
+onClick={()=>
+
+navigate(
+
+"/expenses"
+
+)
+
+}
+
+>
 
 Войти
 
 </Button>
 
-<Text>
+</Form>
+
+<Bottom>
 
 Нет аккаунта?
 
-{" "}
+<br></br>
 
 <Link to="/register">
 
@@ -70,7 +106,7 @@ placeholder="Пароль"
 
 </Link>
 
-</Text>
+</Bottom>
 
 </Card>
 

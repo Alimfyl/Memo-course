@@ -10,7 +10,11 @@ import {
 
 Wrapper,
 
-Title
+Title,
+
+Form,
+
+Select
 
 }
 
@@ -24,9 +28,11 @@ return(
 
 <Title>
 
-Добавить расход
+Новый расход
 
 </Title>
+
+<Form>
 
 <Input
 
@@ -34,11 +40,33 @@ placeholder="Дата"
 
 />
 
-<Input
+<Select>
 
-placeholder="Категория"
+<option>
 
-/>
+Продукты
+
+</option>
+
+<option>
+
+Транспорт
+
+</option>
+
+<option>
+
+Развлечения
+
+</option>
+
+<option>
+
+Кафе
+
+</option>
+
+</Select>
 
 <Input
 
@@ -51,6 +79,8 @@ placeholder="Сумма"
 Добавить
 
 </Button>
+
+</Form>
 
 </Wrapper>
 

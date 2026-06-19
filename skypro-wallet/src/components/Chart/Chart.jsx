@@ -20,7 +20,9 @@ const data=[
 
 title:"Продукты",
 
-width:"85%"
+width:"90%",
+
+color:"#8F5BFF"
 
 },
 
@@ -28,7 +30,9 @@ width:"85%"
 
 title:"Транспорт",
 
-width:"35%"
+width:"35%",
+
+color:"#60A5FA"
 
 },
 
@@ -36,7 +40,9 @@ width:"35%"
 
 title:"Развлечения",
 
-width:"60%"
+width:"65%",
+
+color:"#FB923C"
 
 },
 
@@ -44,7 +50,19 @@ width:"60%"
 
 title:"Кафе",
 
-width:"45%"
+width:"45%",
+
+color:"#EC4899"
+
+},
+
+{
+
+title:"Подарки",
+
+width:"25%",
+
+color:"#34D399"
 
 }
 
@@ -58,7 +76,7 @@ return(
 
 <Title>
 
-Анализ расходов
+Расходы по категориям
 
 </Title>
 
@@ -66,7 +84,11 @@ return(
 
 data.map(item=>(
 
-<Row key={item.title}>
+<Row
+
+key={item.title}
+
+>
 
 <Label>
 
@@ -77,6 +99,8 @@ data.map(item=>(
 <Bar
 
 width={item.width}
+
+color={item.color}
 
 />
 

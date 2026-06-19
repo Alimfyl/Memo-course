@@ -8,11 +8,19 @@ padding:30px;
 
 border-radius:20px;
 
+box-shadow:
+
+0 10px 30px
+
+rgba(0,0,0,.05);
+
 `;
 
 export const Title=styled.h2`
 
-margin-bottom:30px;
+font-size:20px;
+
+margin-bottom:35px;
 
 `;
 
@@ -24,15 +32,15 @@ align-items:center;
 
 gap:20px;
 
-margin-bottom:25px;
+margin-bottom:28px;
 
 `;
 
 export const Label=styled.div`
 
-width:140px;
+width:150px;
 
-font-weight:500;
+font-size:14px;
 
 `;
 
@@ -42,8 +50,8 @@ height:28px;
 
 border-radius:20px;
 
-background:#6C5CE7;
-
 width:${props=>props.width};
+
+background:${props=>props.color};
 
 `;

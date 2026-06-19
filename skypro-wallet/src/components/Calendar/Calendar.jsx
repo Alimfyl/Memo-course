@@ -4,6 +4,8 @@ Wrapper,
 
 Title,
 
+Subtitle,
+
 Grid,
 
 Day
@@ -34,9 +36,15 @@ return(
 
 <Title>
 
-Июнь 2026
+Период
 
 </Title>
+
+<Subtitle>
+
+Июнь 2026
+
+</Subtitle>
 
 <Grid>
 
@@ -44,7 +52,21 @@ return(
 
 days.map(day=>(
 
-<Day key={day}>
+<Day
+
+key={day}
+
+active={
+
+day===12 ||
+
+day===13 ||
+
+day===14
+
+}
+
+>
 
 {day}
 

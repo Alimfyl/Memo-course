@@ -1,36 +1,46 @@
-export const Container = styled.header`
+import styled
 
-height:90px;
+from "styled-components";
 
-padding:0 60px;
+import { Link }
 
-background:white;
+from "react-router-dom";
+
+export const Container=
+
+styled.header`
+
+height:44px;
+
+padding:
+
+0 60px;
 
 display:flex;
 
-justify-content:space-between;
+justify-content:
+
+space-between;
 
 align-items:center;
 
-box-shadow:
-
-0 4px 25px
-
-rgba(0,0,0,.05);
+background:#fff;
 
 `;
 
-export const Logo = styled.div`
+export const Logo=
 
-font-size:34px;
+styled.div`
+
+font-size:11px;
 
 font-weight:700;
 
-color:#6C5CE7;
-
 `;
 
-export const Navigation = styled.nav`
+export const Navigation=
+
+styled.nav`
 
 display:flex;
 
@@ -38,20 +48,50 @@ gap:50px;
 
 `;
 
-export const NavLink = styled(Link)`
+export const NavLink=
 
-color:#444;
+styled(Link)`
 
-font-size:18px;
+font-size:11px;
 
 font-weight:500;
 
-transition:.3s;
+color:#222;
 
-&:hover{
+position:relative;
 
-color:#6C5CE7;
+&.active{
+
+color:#8F5BFF;
 
 }
+
+&.active::after{
+
+content:"";
+
+position:absolute;
+
+left:0;
+
+bottom:-14px;
+
+width:100%;
+
+height:2px;
+
+background:#8F5BFF;
+
+}
+
+`;
+
+export const Logout=
+
+styled(Link)`
+
+font-size:11px;
+
+color:#222;
 
 `;

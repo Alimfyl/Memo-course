@@ -1,20 +1,22 @@
 import {
 
+Wrapper,
+
 Table,
 
-Th,
+Head,
 
-Td
+Cell
 
 }
 
 from "./ExpenseTable.styled";
 
-const data=[
+const expenses=[
 
 {
 
-date:"12.06.2026",
+date:"15.06.2026",
 
 category:"Продукты",
 
@@ -24,7 +26,7 @@ sum:"2500 ₽"
 
 {
 
-date:"13.06.2026",
+date:"16.06.2026",
 
 category:"Транспорт",
 
@@ -34,11 +36,21 @@ sum:"500 ₽"
 
 {
 
-date:"14.06.2026",
+date:"17.06.2026",
 
 category:"Развлечения",
 
 sum:"1500 ₽"
+
+},
+
+{
+
+date:"18.06.2026",
+
+category:"Кафе",
+
+sum:"900 ₽"
 
 }
 
@@ -48,29 +60,31 @@ function ExpenseTable(){
 
 return(
 
+<Wrapper>
+
 <Table>
 
 <thead>
 
 <tr>
 
-<Th>
+<Head>
 
 Дата
 
-</Th>
+</Head>
 
-<Th>
+<Head>
 
 Категория
 
-</Th>
+</Head>
 
-<Th>
+<Head>
 
 Сумма
 
-</Th>
+</Head>
 
 </tr>
 
@@ -80,27 +94,37 @@ return(
 
 {
 
-data.map(item=>(
+expenses.map(item=>(
 
-<tr key={item.date}>
+<tr
 
-<Td>
+key={
+
+item.date+
+
+item.category
+
+}
+
+>
+
+<Cell>
 
 {item.date}
 
-</Td>
+</Cell>
 
-<Td>
+<Cell>
 
 {item.category}
 
-</Td>
+</Cell>
 
-<Td>
+<Cell>
 
 {item.sum}
 
-</Td>
+</Cell>
 
 </tr>
 
@@ -111,6 +135,8 @@ data.map(item=>(
 </tbody>
 
 </Table>
+
+</Wrapper>
 
 )
 

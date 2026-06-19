@@ -1,23 +1,73 @@
-import styled from "styled-components";
+import styled
 
-export const Wrapper=styled.div`
+from "styled-components";
+
+export const Wrapper=
+
+styled.div`
 
 background:white;
 
-padding:30px;
+padding:25px;
 
 border-radius:20px;
+
+box-shadow:
+
+0 10px 30px
+
+rgba(
+
+0,
+
+0,
+
+0,
+
+0.05
+
+);
+
+`;
+
+export const Title=
+
+styled.h2`
+
+font-size:18px;
+
+margin-bottom:20px;
+
+`;
+
+export const Form=
+
+styled.div`
 
 display:flex;
 
 flex-direction:column;
 
-gap:20px;
+gap:14px;
 
 `;
 
-export const Title=styled.h2`
+export const Select=
 
-font-size:24px;
+styled.select`
+
+height:42px;
+
+padding:0 15px;
+
+border:
+
+1px solid
+
+#E8E8E8;
+
+border-radius:10px;
+
+outline:none;
 
 `;

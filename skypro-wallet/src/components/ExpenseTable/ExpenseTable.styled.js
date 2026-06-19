@@ -1,35 +1,59 @@
 import styled from "styled-components";
 
-export const Table = styled.table`
+export const Wrapper=
 
-width:100%;
+styled.div`
 
-background:#fff;
+background:white;
 
 border-radius:20px;
 
-overflow:hidden;
+padding:25px;
+
+box-shadow:
+
+0 10px 30px
+
+rgba(0,0,0,.05);
+
+`;
+
+export const Table=
+
+styled.table`
+
+width:100%;
 
 border-collapse:collapse;
 
 `;
 
-export const Th = styled.th`
+export const Head=
 
-padding:20px;
+styled.th`
 
-background:#6C5CE7;
-
-color:white;
+padding-bottom:20px;
 
 text-align:left;
 
+font-size:14px;
+
+color:#999;
+
 `;
 
-export const Td = styled.td`
+export const Cell=
 
-padding:20px;
+styled.td`
 
-border-bottom:1px solid #eee;
+padding:20px 0;
+
+border-top:
+
+1px solid
+
+#F0F0F0;
+
+font-size:14px;
 
 `;

@@ -1,24 +1,44 @@
-import styled from "styled-components";
+import styled
 
-export const StyledInput = styled.input`
+from "styled-components";
+
+export const StyledInput=
+
+styled.input`
 
 width:100%;
 
-height:52px;
+height:28px;
 
-padding:0 20px;
+padding:
 
-border:1px solid #D9D9D9;
+0 10px;
 
-border-radius:12px;
+border:
 
-font-size:16px;
+1px solid
+
+#E6E6E6;
+
+border-radius:4px;
+
+font-size:10px;
 
 outline:none;
 
+&::placeholder{
+
+color:#C5C5C5;
+
+}
+
 &:focus{
 
-border:1px solid #6C5CE7;
+border:
+
+1px solid
+
+#8F5BFF;
 
 }
 
