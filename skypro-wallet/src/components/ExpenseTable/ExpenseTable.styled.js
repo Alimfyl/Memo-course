@@ -1,59 +1,71 @@
 import styled from "styled-components";
 
-export const Wrapper=
+export const Wrapper = styled.div`
+  background: #ffffff;
 
-styled.div`
+  border-radius: 20px;
 
-background:white;
+  padding: 28px;
 
-border-radius:20px;
-
-padding:25px;
-
-box-shadow:
-
-0 10px 30px
-
-rgba(0,0,0,.05);
-
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
 `;
 
-export const Table=
+export const Table = styled.table`
+  width: 100%;
 
-styled.table`
-
-width:100%;
-
-border-collapse:collapse;
-
+  border-collapse: collapse;
 `;
 
-export const Head=
+export const Head = styled.th`
+  text-align: left;
 
-styled.th`
+  padding-bottom: 18px;
 
-padding-bottom:20px;
+  font-size: 14px;
 
-text-align:left;
+  font-weight: 600;
 
-font-size:14px;
-
-color:#999;
-
+  color: #8a8a8a;
 `;
 
-export const Cell=
+export const Row = styled.tr`
+  border-top: 1px solid #f1f1f1;
+`;
 
-styled.td`
+export const Cell = styled.td`
+  padding: 22px 0;
 
-padding:20px 0;
+  font-size: 14px;
+`;
 
-border-top:
+export const Sum = styled.td`
+  padding: 22px 0;
 
-1px solid
+  font-size: 15px;
 
-#F0F0F0;
+  font-weight: 700;
+`;
 
-font-size:14px;
+export const Delete = styled.button`
+  width: 32px;
 
+  height: 32px;
+
+  border-radius: 50%;
+
+  border: none;
+
+  background: #f3f3f3;
+
+  font-size: 18px;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+
+  &:hover {
+    background: #8f5bff;
+
+    color: white;
+  }
 `;

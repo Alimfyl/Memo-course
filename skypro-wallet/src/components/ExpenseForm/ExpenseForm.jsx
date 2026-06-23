@@ -1,91 +1,60 @@
-import Button
+import { useState } from "react";
 
-from "../Button/Button";
-
-import Input
-
-from "../Input/Input";
+import Input from "../Input/Input";
 
 import {
+  Wrapper,
+  Title,
+  Form,
+  Label,
+  Categories,
+  Category,
+  Submit,
+} from "./ExpenseForm.styled";
 
-Wrapper,
+const categories = [
+  "Продукты",
+  "Транспорт",
+  "Кафе",
+  "Развлечения",
+  "Подарки",
+];
 
-Title,
+function ExpenseForm() {
+  const [active, setActive] = useState("Продукты");
 
-Form,
+  return (
+    <Wrapper>
+      <Title>Новый расход</Title>
 
-Select
+      <Form>
+        <Label>Дата</Label>
 
-}
+        <Input placeholder="15.06.2026" />
 
-from "./ExpenseForm.styled";
+        <Label>Категория</Label>
 
-function ExpenseForm(){
+        <Categories>
+          {categories.map((item) => (
+            <Category
+              key={item}
+              active={active === item}
+              onClick={() => setActive(item)}
+              type="button"
+            >
+              {item}
+            </Category>
+          ))}
+        </Categories>
 
-return(
+        <Label>Сумма</Label>
 
-<Wrapper>
+        <Input placeholder="1000 ₽" />
 
-<Title>
-
-Новый расход
-
-</Title>
-
-<Form>
-
-<Input
-
-placeholder="Дата"
-
-/>
-
-<Select>
-
-<option>
-
-Продукты
-
-</option>
-
-<option>
-
-Транспорт
-
-</option>
-
-<option>
-
-Развлечения
-
-</option>
-
-<option>
-
-Кафе
-
-</option>
-
-</Select>
-
-<Input
-
-placeholder="Сумма"
-
-/>
-
-<Button>
-
-Добавить
-
-</Button>
-
-</Form>
-
-</Wrapper>
-
-)
-
+        <Submit>Добавить</Submit>
+      </Form>
+    </Wrapper>
+  );
 }
 
 export default ExpenseForm;

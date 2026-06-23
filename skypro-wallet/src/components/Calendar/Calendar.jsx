@@ -1,86 +1,348 @@
+import { useState } from "react";
+
 import {
+  Wrapper,
+  Title,
+  Subtitle,
+  WeekDays,
+  DaysWrapper,
+  Grid,
+  Day,
+} from "./Calendar.styled";
 
-Wrapper,
+const weekDays = [
 
-Title,
+  "Пн",
 
-Subtitle,
+  "Вт",
 
-Grid,
+  "Ср",
 
-Day
+  "Чт",
 
-}
+  "Пт",
 
-from "./Calendar.styled";
+  "Сб",
 
-const days=[
+  "Вс",
 
-1,2,3,4,5,6,7,
+];
 
-8,9,10,11,12,13,14,
+const months = [
 
-15,16,17,18,19,20,21,
+  {
 
-22,23,24,25,26,27,28,
+    title: "Июль 2024",
 
-29,30
+    monthName: "июля",
 
-]
+    days: Array.from(
 
-function Calendar(){
+      { length: 31 },
 
-return(
+      (_, i) => i + 1
 
-<Wrapper>
+    ),
 
-<Title>
+  },
 
-Период
+  {
 
-</Title>
+    title: "Август 2024",
 
-<Subtitle>
+    monthName: "августа",
 
-Июнь 2026
+    days: Array.from(
 
-</Subtitle>
+      { length: 31 },
 
-<Grid>
+      (_, i) => i + 1
 
-{
+    ),
 
-days.map(day=>(
+  },
 
-<Day
+];
 
-key={day}
+function Calendar({
 
-active={
+  setSelectedPeriod,
 
-day===12 ||
+}) {
 
-day===13 ||
+  const [selectedDays, setSelectedDays] = useState([
 
-day===14
+    "Июль 2024-10",
 
-}
+    "Июль 2024-14",
 
->
+  ]);
 
-{day}
+  const handleSelect = (
 
-</Day>
+    month,
 
-))
+    monthName,
 
-}
+    day
 
-</Grid>
+  ) => {
 
-</Wrapper>
+    const id = `${month}-${day}`;
 
-)
+    const newSelected =
+
+      selectedDays.includes(id)
+
+      ?
+
+      selectedDays.filter(
+
+        item => item !== id
+
+      )
+
+      :
+
+      [
+
+        ...selectedDays,
+
+        id,
+
+      ];
+
+    setSelectedDays(
+
+      newSelected
+
+    );
+
+    const period =
+
+      newSelected
+
+      .map(item => {
+
+        const [
+
+          month,
+
+          day,
+
+        ] = item.split("-");
+
+        return {
+
+          day:Number(day),
+
+          month:
+
+          month ===
+
+          "Июль 2024"
+
+          ?
+
+          "июля"
+
+          :
+
+          "августа",
+
+          year:2024,
+
+          order:
+
+          month ===
+
+          "Июль 2024"
+
+          ?
+
+          0
+
+          :
+
+          1,
+
+        };
+
+      })
+
+      .sort(
+
+        (a,b)=>{
+
+          if(
+
+            a.order===
+
+            b.order
+
+          ){
+
+            return(
+
+              a.day-
+
+              b.day
+
+            );
+
+          }
+
+          return(
+
+            a.order-
+
+            b.order
+
+          );
+
+        }
+
+      );
+
+    setSelectedPeriod(
+
+      period
+
+    );
+
+  };
+
+  return (
+
+    <Wrapper>
+
+      <Title>
+
+        Период
+
+      </Title>
+
+      <WeekDays>
+
+        {
+
+          weekDays.map(
+
+            day=>(
+
+              <div
+
+                key={day}
+
+              >
+
+                {day}
+
+              </div>
+
+            )
+
+          )
+
+        }
+
+      </WeekDays>
+
+      <DaysWrapper>
+
+        {
+
+          months.map(
+
+            month=>(
+
+              <div
+
+                key={
+
+                  month.title
+
+                }
+
+              >
+
+                <Subtitle>
+
+                  {
+
+                    month.title
+
+                  }
+
+                </Subtitle>
+
+                <Grid>
+
+                  {
+
+                    month.days.map(
+
+                      day=>{
+
+                        const id=
+
+                        `${month.title}-${day}`;
+
+                        return(
+
+                          <Day
+
+                            key={id}
+
+                            active={
+
+                              selectedDays.includes(id)
+
+                            }
+
+                            onClick={()=>
+
+                              handleSelect(
+
+                                month.title,
+
+                                month.monthName,
+
+                                day
+
+                              )
+
+                            }
+
+                          >
+
+                            {day}
+
+                          </Day>
+
+                        );
+
+                      }
+
+                    )
+
+                  }
+
+                </Grid>
+
+              </div>
+
+            )
+
+          )
+
+        }
+
+      </DaysWrapper>
+
+    </Wrapper>
+
+  );
 
 }
 

@@ -1,118 +1,332 @@
 import {
 
-Wrapper,
+  ResponsiveContainer,
 
-Title,
+  BarChart,
 
-Row,
+  Bar,
 
-Label,
+  XAxis,
 
-Bar
+  Tooltip,
 
-}
+  Cell,
 
-from "./Chart.styled";
+  LabelList,
 
-const data=[
+} from "recharts";
 
-{
+import {
 
-title:"Продукты",
+  Wrapper,
 
-width:"90%",
+  Amount,
 
-color:"#8F5BFF"
+  Subtitle,
 
-},
+} from "./Chart.styled";
 
-{
+const data = [
 
-title:"Транспорт",
+  {
 
-width:"35%",
+    name:"Еда",
 
-color:"#60A5FA"
+    value:3590,
 
-},
+    label:"3590 ₽",
 
-{
+    color:"#CDB2FF",
 
-title:"Развлечения",
+  },
 
-width:"65%",
+  {
 
-color:"#FB923C"
+    name:"Транспорт",
 
-},
+    value:1835,
 
-{
+    label:"1835 ₽",
 
-title:"Кафе",
+    color:"#F7B733",
 
-width:"45%",
+  },
 
-color:"#EC4899"
+  {
 
-},
+    name:"Жилье",
 
-{
+    value:35,
 
-title:"Подарки",
+    label:"0 ₽",
 
-width:"25%",
+    color:"#7DD3FC",
 
-color:"#34D399"
+  },
 
-}
+  {
 
-]
+    name:"Развлечения",
 
-function Chart(){
+    value:1250,
 
-return(
+    label:"1250 ₽",
 
-<Wrapper>
+    color:"#A78BFA",
 
-<Title>
+  },
 
-Расходы по категориям
+  {
 
-</Title>
+    name:"Образование",
 
-{
+    value:600,
 
-data.map(item=>(
+    label:"600 ₽",
 
-<Row
+    color:"#B8E986",
 
-key={item.title}
+  },
 
->
+  {
 
-<Label>
+    name:"Другое",
 
-{item.title}
+    value:2306,
 
-</Label>
+    label:"2306 ₽",
 
-<Bar
+    color:"#F6B0C8",
 
-width={item.width}
+  },
 
-color={item.color}
+];
 
-/>
+function Chart({
 
-</Row>
+  selectedPeriod,
 
-))
+}) {
 
-}
+  let periodText="";
 
-</Wrapper>
+  if(
 
-)
+    selectedPeriod.length===1
+
+  ){
+
+    const item=
+
+      selectedPeriod[0];
+
+    periodText=
+
+      `${item.day}
+
+      ${item.month}
+
+      ${item.year}`;
+
+  }
+
+  else{
+
+    const first=
+
+      selectedPeriod[0];
+
+    const last=
+
+      selectedPeriod[
+
+      selectedPeriod.length-1
+
+      ];
+
+    periodText=
+
+      `${first.day}
+
+      ${first.month}
+
+      ${first.year}
+
+      —
+
+      ${last.day}
+
+      ${last.month}
+
+      ${last.year}`;
+
+  }
+
+  return (
+
+    <Wrapper>
+
+      <Amount>
+
+        9 581 ₽
+
+      </Amount>
+
+      <Subtitle>
+
+        Расходы за
+
+        {" "}
+
+        {periodText}
+
+      </Subtitle>
+
+      <ResponsiveContainer
+
+        width="100%"
+
+        height={320}
+
+      >
+
+        <BarChart
+
+          data={data}
+
+          margin={{
+
+            top:35,
+
+            right:0,
+
+            left:0,
+
+            bottom:0,
+
+          }}
+
+        >
+
+          <XAxis
+
+            dataKey="name"
+
+            axisLine={false}
+
+            tickLine={false}
+
+            interval={0}
+
+            tick={{
+
+              fontSize:14,
+
+              fill:"#2A2A2A",
+
+            }}
+
+          />
+
+          <Tooltip
+
+            formatter={(
+
+              value,
+
+              name,
+
+              props
+
+            )=>
+
+            [
+
+              props.payload.label,
+
+              "Сумма",
+
+            ]
+
+            }
+
+          />
+
+          <Bar
+
+            dataKey="value"
+
+            barSize={70}
+
+            radius={[
+
+              18,
+
+              18,
+
+              18,
+
+              18,
+
+            ]}
+
+          >
+
+            <LabelList
+
+              dataKey="label"
+
+              position="top"
+
+              style={{
+
+                fontSize:15,
+
+                fontWeight:700,
+
+                fill:"#111",
+
+              }}
+
+            />
+
+            {
+
+              data.map(
+
+                entry=>(
+
+                  <Cell
+
+                    key={
+
+                      entry.name
+
+                    }
+
+                    fill={
+
+                      entry.color
+
+                    }
+
+                  />
+
+                )
+
+              )
+
+            }
+
+          </Bar>
+
+        </BarChart>
+
+      </ResponsiveContainer>
+
+    </Wrapper>
+
+  );
 
 }
 

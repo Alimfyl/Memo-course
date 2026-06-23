@@ -8,19 +8,20 @@ min-height:100vh;
 
 export const Container = styled.div`
 
-max-width:1100px;
+max-width:1200px;
 
-margin:40px auto;
+margin: 0 auto;
+padding: 50px 0 80px;
 
 `;
 
 export const Title = styled.h1`
 
-font-size:24px;
+font-size:48px;
 
 font-weight:700;
 
-margin-bottom:30px;
+margin-bottom:48px;
 
 `;
 
@@ -28,9 +29,9 @@ export const Content = styled.div`
 
 display:flex;
 
-gap:30px;
+gap:32px;
 
-align-items:flex-start;
+align-items:stretch;
 
 @media(max-width:900px){
 

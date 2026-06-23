@@ -1,57 +1,45 @@
 import styled from "styled-components";
 
-export const Wrapper=styled.div`
+export const Wrapper = styled.div`
+  width: 789px;
 
-background:white;
+  height: 540px;
 
-padding:30px;
+  background: #f7f7f7;
 
-border-radius:20px;
+  border-radius: 28px;
 
-box-shadow:
+  padding: 32px;
 
-0 10px 30px
+  box-sizing: border-box;
 
-rgba(0,0,0,.05);
-
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
 `;
 
-export const Title=styled.h2`
+export const Title = styled.h2`
+  font-size: 22px;
 
-font-size:20px;
+  font-weight: 700;
 
-margin-bottom:35px;
-
+  margin-bottom: 30px;
 `;
 
-export const Row=styled.div`
+export const Amount = styled.h1`
+  font-size: 50px;
 
-display:flex;
+  font-weight: 700;
 
-align-items:center;
+  line-height: 1;
 
-gap:20px;
+  margin-bottom: 12px;
 
-margin-bottom:28px;
-
+  color: #111111;
 `;
 
-export const Label=styled.div`
+export const Subtitle = styled.div`
+  font-size: 14px;
 
-width:150px;
+  color: #9e9e9e;
 
-font-size:14px;
-
-`;
-
-export const Bar=styled.div`
-
-height:28px;
-
-border-radius:20px;
-
-width:${props=>props.width};
-
-background:${props=>props.color};
-
+  margin-bottom: 36px;
 `;

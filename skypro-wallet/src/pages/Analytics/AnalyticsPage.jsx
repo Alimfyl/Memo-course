@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import Header from "../../components/Header/Header";
 
 import Calendar from "../../components/Calendar/Calendar";
@@ -5,60 +7,81 @@ import Calendar from "../../components/Calendar/Calendar";
 import Chart from "../../components/Chart/Chart";
 
 import {
+  Wrapper,
+  Container,
+  Title,
+  Content,
+  Left,
+  Right,
+} from "./AnalysticsPage.styled";
 
-Wrapper,
+function AnalyticsPage() {
 
-Container,
+  const [selectedPeriod, setSelectedPeriod] = useState([
+    {
+      day: 10,
+      month: "июля",
+      year: 2024,
+    },
 
-Title,
+    {
+      day: 14,
+      month: "июля",
+      year: 2024,
+    },
+  ]);
 
-Content,
+  return (
 
-Left,
+    <Wrapper>
 
-Right
+      <Header />
 
-}
+      <Container>
 
-from "./AnalysticsPage.styled";
+        <Title>
 
-function AnalyticsPage(){
+          Анализ расходов
 
-return(
+        </Title>
 
-<Wrapper>
+        <Content>
 
-<Header/>
+          <Left>
 
-<Container>
+            <Calendar
 
-<Title>
+              setSelectedPeriod={
 
-Анализ расходов
+                setSelectedPeriod
 
-</Title>
+              }
 
-<Content>
+            />
 
-<Left>
+          </Left>
 
-<Calendar/>
+          <Right>
 
-</Left>
+            <Chart
 
-<Right>
+              selectedPeriod={
 
-<Chart/>
+                selectedPeriod
 
-</Right>
+              }
 
-</Content>
+            />
 
-</Container>
+          </Right>
 
-</Wrapper>
+        </Content>
 
-)
+      </Container>
+
+    </Wrapper>
+
+  );
 
 }
 
