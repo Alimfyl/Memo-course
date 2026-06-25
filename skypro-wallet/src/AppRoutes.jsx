@@ -16,6 +16,8 @@ import ExpensesPage from "./pages/Expenses/ExpensesPage";
 
 import AnalyticsPage from "./pages/Analytics/AnalyticsPage";
 
+import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
+
 function AppRoutes(){
 
 return(
@@ -59,6 +61,14 @@ element={<ExpensesPage/>}
 path="/analytics"
 
 element={<AnalyticsPage/>}
+
+/>
+
+<Route
+
+path="*"
+
+element={<NotFoundPage/>}
 
 />
 

@@ -8,7 +8,7 @@ styled.button`
 
 width:100%;
 
-height:28px;
+height:40px;
 
 background:
 
@@ -16,9 +16,9 @@ background:
 
 color:white;
 
-border-radius:4px;
+border-radius:6px;
 
-font-size:10px;
+font-size:13px;
 
 font-weight:600;
 

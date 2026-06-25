@@ -1,119 +1,40 @@
-import {
+import { Link, useNavigate } from "react-router-dom";
+import { FiCreditCard } from "react-icons/fi";
 
-Link,
+import Button from "../../components/Button/Button";
+import Input from "../../components/Input/Input";
 
-useNavigate
+import { Wrapper, Logo, Card, Title, Form, Bottom } from "./LoginPage.styled";
 
-}
+function LoginPage() {
+  const navigate = useNavigate();
 
-from
+  return (
+    <Wrapper>
+      <Logo>
+        <FiCreditCard />
+        Skypro.Wallet
+      </Logo>
 
-"react-router-dom";
+      <Card>
+        <Title>Вход</Title>
 
-import Button
+        <Form>
+          <Input placeholder="Логин" />
 
-from
+          <Input type="password" placeholder="Пароль" />
 
-"../../components/Button/Button";
+          <Button onClick={() => navigate("/expenses")}>Войти</Button>
+        </Form>
 
-import Input
-
-from
-
-"../../components/Input/Input";
-
-import {
-
-Wrapper,
-
-Card,
-
-Title,
-
-Form,
-
-Bottom
-
-}
-
-from
-
-"./LoginPage.styled";
-
-function LoginPage(){
-
-const navigate=
-
-useNavigate();
-
-return(
-
-<Wrapper>
-
-<Card>
-
-<Title>
-
-Вход
-
-</Title>
-
-<Form>
-
-<Input
-
-placeholder="Логин"
-
-/>
-
-<Input
-
-type="password"
-
-placeholder="Пароль"
-
-/>
-
-<Button
-
-onClick={()=>
-
-navigate(
-
-"/expenses"
-
-)
-
-}
-
->
-
-Войти
-
-</Button>
-
-</Form>
-
-<Bottom>
-
-Нет аккаунта?
-
-<br></br>
-
-<Link to="/register">
-
-Зарегистрироваться
-
-</Link>
-
-</Bottom>
-
-</Card>
-
-</Wrapper>
-
-)
-
+        <Bottom>
+          Нет аккаунта?
+          <br />
+          <Link to="/register">Зарегистрироваться</Link>
+        </Bottom>
+      </Card>
+    </Wrapper>
+  );
 }
 
 export default LoginPage;

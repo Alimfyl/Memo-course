@@ -1,4 +1,12 @@
 import { useState } from "react";
+import {
+  MdDirectionsCar,
+  MdFastfood,
+  MdHome,
+  MdNotes,
+  MdSchool,
+  MdSportsEsports,
+} from "react-icons/md";
 
 import Input from "../Input/Input";
 
@@ -13,45 +21,65 @@ import {
 } from "./ExpenseForm.styled";
 
 const categories = [
-  "Продукты",
-  "Транспорт",
-  "Кафе",
-  "Развлечения",
-  "Подарки",
+  {
+    title: "Еда",
+    icon: <MdFastfood />,
+  },
+  {
+    title: "Транспорт",
+    icon: <MdDirectionsCar />,
+  },
+  {
+    title: "Жилье",
+    icon: <MdHome />,
+  },
+  {
+    title: "Развлечения",
+    icon: <MdSportsEsports />,
+  },
+  {
+    title: "Образование",
+    icon: <MdSchool />,
+  },
+  {
+    title: "Другое",
+    icon: <MdNotes />,
+  },
 ];
 
 function ExpenseForm() {
-  const [active, setActive] = useState("Продукты");
+  const [active, setActive] = useState("Еда");
 
   return (
     <Wrapper>
       <Title>Новый расход</Title>
 
       <Form>
-        <Label>Дата</Label>
-
-        <Input placeholder="15.06.2026" />
+        <Label>Описание</Label>
+        <Input placeholder="Введите описание" />
 
         <Label>Категория</Label>
-
         <Categories>
           {categories.map((item) => (
             <Category
-              key={item}
-              active={active === item}
-              onClick={() => setActive(item)}
+              key={item.title}
+              $active={active === item.title}
+              onClick={() => setActive(item.title)}
               type="button"
             >
-              {item}
+              {item.icon}
+              <span>{item.title}</span>
             </Category>
           ))}
         </Categories>
 
+        <Label>Дата</Label>
+        <Input placeholder="Введите дату" />
+
         <Label>Сумма</Label>
+        <Input placeholder="Введите сумму" />
 
-        <Input placeholder="1000 ₽" />
-
-        <Submit>Добавить</Submit>
+        <Submit>Добавить новый расход</Submit>
       </Form>
     </Wrapper>
   );

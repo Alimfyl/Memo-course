@@ -8,11 +8,11 @@ styled.input`
 
 width:100%;
 
-height:28px;
+height:40px;
 
 padding:
 
-0 10px;
+0 16px;
 
 border:
 
@@ -20,9 +20,9 @@ border:
 
 #E6E6E6;
 
-border-radius:4px;
+border-radius:6px;
 
-font-size:10px;
+font-size:13px;
 
 outline:none;
 
@@ -39,6 +39,8 @@ border:
 1px solid
 
 #8F5BFF;
+
+box-shadow:0 0 0 3px rgba(143,91,255,.12);
 
 }
 

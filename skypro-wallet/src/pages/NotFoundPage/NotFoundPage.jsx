@@ -3,12 +3,18 @@ import styled from "styled-components";
 
 const NotFoundWrapper = styled.div`
   display: flex;
+  min-height: 100vh;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-  background-color: #EAEEF6;
-  font-family: "Roboto", sans-serif;
+  gap: 14px;
+  background-color: #f3f3f3;
+  color: #1e1e1e;
+`;
+
+const BackLink = styled(Link)`
+  color: #8f5bff;
+  font-weight: 600;
 `;
 
 function NotFoundPage() {
@@ -16,9 +22,7 @@ function NotFoundPage() {
     <NotFoundWrapper>
       <h1>404</h1>
       <p>Упс... Кажется, такой страницы не существует.</p>
-      <Link to="/" style={{ color: "#565EEF", marginTop: "20px" }}>
-        Вернуться на главную
-      </Link>
+      <BackLink to="/expenses">Вернуться к расходам</BackLink>
     </NotFoundWrapper>
   );
 }

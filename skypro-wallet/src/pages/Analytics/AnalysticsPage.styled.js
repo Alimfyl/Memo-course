@@ -1,54 +1,45 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-
-min-height:100vh;
-
+  min-height: 100vh;
 `;
 
 export const Container = styled.div`
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 42px 0 80px;
 
-max-width:1200px;
-
-margin: 0 auto;
-padding: 50px 0 80px;
-
+  @media (max-width: 1260px) {
+    padding-right: 24px;
+    padding-left: 24px;
+  }
 `;
 
 export const Title = styled.h1`
+  margin-bottom: 38px;
+  font-size: 32px;
+  line-height: 1.2;
 
-font-size:48px;
-
-font-weight:700;
-
-margin-bottom:48px;
-
+  @media (max-width: 620px) {
+    font-size: 30px;
+  }
 `;
 
 export const Content = styled.div`
+  display: grid;
+  grid-template-columns: 380px minmax(0, 790px);
+  gap: 32px;
+  align-items: flex-start;
 
-display:flex;
-
-gap:32px;
-
-align-items:stretch;
-
-@media(max-width:900px){
-
-flex-direction:column;
-
-}
-
+  @media (max-width: 980px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 export const Left = styled.div`
-
-width:320px;
-
+  min-width: 0;
 `;
 
 export const Right = styled.div`
-
-flex:1;
-
+  min-width: 0;
 `;

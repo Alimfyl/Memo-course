@@ -10,340 +10,93 @@ import {
   Day,
 } from "./Calendar.styled";
 
-const weekDays = [
-
-  "Пн",
-
-  "Вт",
-
-  "Ср",
-
-  "Чт",
-
-  "Пт",
-
-  "Сб",
-
-  "Вс",
-
-];
+const weekDays = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
 
 const months = [
-
   {
-
     title: "Июль 2024",
-
     monthName: "июля",
-
-    days: Array.from(
-
-      { length: 31 },
-
-      (_, i) => i + 1
-
-    ),
-
+    order: 0,
+    startOffset: 0,
+    days: Array.from({ length: 31 }, (_, i) => i + 1),
   },
-
   {
-
     title: "Август 2024",
-
     monthName: "августа",
-
-    days: Array.from(
-
-      { length: 31 },
-
-      (_, i) => i + 1
-
-    ),
-
+    order: 1,
+    startOffset: 3,
+    days: Array.from({ length: 31 }, (_, i) => i + 1),
   },
-
 ];
 
-function Calendar({
+function Calendar({ setSelectedPeriod }) {
+  const [selectedDays, setSelectedDays] = useState(["Июль 2024-10"]);
 
-  setSelectedPeriod,
+  const handleSelect = (month, day) => {
+    const id = `${month.title}-${day}`;
+    const newSelected = selectedDays.includes(id)
+      ? selectedDays.filter((item) => item !== id)
+      : [...selectedDays, id];
 
-}) {
+    setSelectedDays(newSelected);
 
-  const [selectedDays, setSelectedDays] = useState([
-
-    "Июль 2024-10",
-
-    "Июль 2024-14",
-
-  ]);
-
-  const handleSelect = (
-
-    month,
-
-    monthName,
-
-    day
-
-  ) => {
-
-    const id = `${month}-${day}`;
-
-    const newSelected =
-
-      selectedDays.includes(id)
-
-      ?
-
-      selectedDays.filter(
-
-        item => item !== id
-
-      )
-
-      :
-
-      [
-
-        ...selectedDays,
-
-        id,
-
-      ];
-
-    setSelectedDays(
-
-      newSelected
-
-    );
-
-    const period =
-
-      newSelected
-
-      .map(item => {
-
-        const [
-
-          month,
-
-          day,
-
-        ] = item.split("-");
+    const period = newSelected
+      .map((item) => {
+        const [monthTitle, selectedDay] = item.split("-");
+        const selectedMonth = months.find(({ title }) => title === monthTitle);
 
         return {
-
-          day:Number(day),
-
-          month:
-
-          month ===
-
-          "Июль 2024"
-
-          ?
-
-          "июля"
-
-          :
-
-          "августа",
-
-          year:2024,
-
-          order:
-
-          month ===
-
-          "Июль 2024"
-
-          ?
-
-          0
-
-          :
-
-          1,
-
+          day: Number(selectedDay),
+          month: selectedMonth.monthName,
+          year: 2024,
+          order: selectedMonth.order,
         };
-
       })
+      .sort((a, b) => (a.order === b.order ? a.day - b.day : a.order - b.order));
 
-      .sort(
-
-        (a,b)=>{
-
-          if(
-
-            a.order===
-
-            b.order
-
-          ){
-
-            return(
-
-              a.day-
-
-              b.day
-
-            );
-
-          }
-
-          return(
-
-            a.order-
-
-            b.order
-
-          );
-
-        }
-
-      );
-
-    setSelectedPeriod(
-
-      period
-
-    );
-
+    setSelectedPeriod(period);
   };
 
   return (
-
     <Wrapper>
-
-      <Title>
-
-        Период
-
-      </Title>
+      <Title>Период</Title>
 
       <WeekDays>
-
-        {
-
-          weekDays.map(
-
-            day=>(
-
-              <div
-
-                key={day}
-
-              >
-
-                {day}
-
-              </div>
-
-            )
-
-          )
-
-        }
-
+        {weekDays.map((day) => (
+          <div key={day}>{day}</div>
+        ))}
       </WeekDays>
 
       <DaysWrapper>
+        {months.map((month) => (
+          <div key={month.title}>
+            <Subtitle>{month.title}</Subtitle>
 
-        {
+            <Grid>
+              {Array.from({ length: month.startOffset }, (_, index) => (
+                <div key={`${month.title}-empty-${index}`} />
+              ))}
 
-          months.map(
+              {month.days.map((day) => {
+                const id = `${month.title}-${day}`;
 
-            month=>(
-
-              <div
-
-                key={
-
-                  month.title
-
-                }
-
-              >
-
-                <Subtitle>
-
-                  {
-
-                    month.title
-
-                  }
-
-                </Subtitle>
-
-                <Grid>
-
-                  {
-
-                    month.days.map(
-
-                      day=>{
-
-                        const id=
-
-                        `${month.title}-${day}`;
-
-                        return(
-
-                          <Day
-
-                            key={id}
-
-                            active={
-
-                              selectedDays.includes(id)
-
-                            }
-
-                            onClick={()=>
-
-                              handleSelect(
-
-                                month.title,
-
-                                month.monthName,
-
-                                day
-
-                              )
-
-                            }
-
-                          >
-
-                            {day}
-
-                          </Day>
-
-                        );
-
-                      }
-
-                    )
-
-                  }
-
-                </Grid>
-
-              </div>
-
-            )
-
-          )
-
-        }
-
+                return (
+                  <Day
+                    key={id}
+                    $active={selectedDays.includes(id)}
+                    onClick={() => handleSelect(month, day)}
+                    type="button"
+                  >
+                    {day}
+                  </Day>
+                );
+              })}
+            </Grid>
+          </div>
+        ))}
       </DaysWrapper>
-
     </Wrapper>
-
   );
-
 }
 
 export default Calendar;

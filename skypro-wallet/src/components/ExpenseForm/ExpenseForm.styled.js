@@ -1,86 +1,63 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  background: #fff;
-
-  padding: 28px;
-
-  border-radius: 20px;
-
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  background: #ffffff;
+  padding: 32px;
+  border-radius: 28px;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.08);
 `;
 
 export const Title = styled.h2`
-  font-size: 22px;
-
-  font-weight: 700;
-
   margin-bottom: 24px;
+  font-size: 26px;
+  line-height: 1.2;
 `;
 
 export const Form = styled.div`
   display: flex;
-
   flex-direction: column;
-
   gap: 18px;
 `;
 
 export const Label = styled.label`
-  font-size: 14px;
-
-  font-weight: 500;
+  margin-bottom: -4px;
+  font-size: 17px;
+  font-weight: 700;
 `;
 
 export const Categories = styled.div`
   display: flex;
-
   flex-wrap: wrap;
-
-  gap: 10px;
+  gap: 8px;
 `;
 
 export const Category = styled.button`
-  padding: 8px 14px;
-
-  border-radius: 30px;
-
-  border: 1px solid
-    ${(props) => (props.active ? "#8F5BFF" : "#E8E8E8")};
-
-  background: ${(props) =>
-    props.active ? "#8F5BFF" : "#FFFFFF"};
-
-  color: ${(props) =>
-    props.active ? "#FFFFFF" : "#222222"};
-
+  display: flex;
+  height: 32px;
+  align-items: center;
+  gap: 10px;
+  padding: 0 18px;
+  border-radius: 18px;
+  background: ${(props) => (props.$active ? "#eeeeee" : "#f2f2f2")};
+  color: #222222;
   font-size: 13px;
-
   transition: 0.2s;
 
-  cursor: pointer;
+  svg {
+    font-size: 15px;
+  }
+
+  &:hover {
+    background: #e9e9e9;
+  }
 `;
 
 export const Submit = styled.button`
-  height: 46px;
-
-  background: #8f5bff;
-
-  color: white;
-
-  border: none;
-
-  border-radius: 12px;
-
-  font-size: 14px;
-
-  font-weight: 600;
-
-  cursor: pointer;
-
-  transition: 0.2s;
-
-  &:hover {
-    opacity: 0.9;
-  }
+  height: 39px;
+  margin-top: 6px;
+  border-radius: 6px;
+  background: #7b2ff2;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
 `;
