@@ -1,10 +1,30 @@
-import { useLocation } from "react-router-dom";
+import {
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
+
 import { FiCreditCard } from "react-icons/fi";
 
-import { Container, Logo, Navigation, NavLink, Logout } from "./Header.styled";
+import { logoutUser } from "../../api/authApi";
+
+import {
+  Container,
+  Logo,
+  Navigation,
+  NavLink,
+  Logout,
+} from "./Header.styled";
 
 function Header() {
   const location = useLocation();
+
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logoutUser();
+
+    navigate("/login");
+  };
 
   return (
     <Container>
@@ -16,20 +36,33 @@ function Header() {
       <Navigation>
         <NavLink
           to="/expenses"
-          className={location.pathname === "/expenses" ? "active" : ""}
+          className={
+            location.pathname === "/expenses"
+              ? "active"
+              : ""
+          }
         >
           Мои расходы
         </NavLink>
 
         <NavLink
           to="/analytics"
-          className={location.pathname === "/analytics" ? "active" : ""}
+          className={
+            location.pathname === "/analytics"
+              ? "active"
+              : ""
+          }
         >
           Анализ расходов
         </NavLink>
       </Navigation>
 
-      <Logout to="/login">Выйти</Logout>
+      <Logout
+        as="button"
+        onClick={handleLogout}
+      >
+        Выйти
+      </Logout>
     </Container>
   );
 }
