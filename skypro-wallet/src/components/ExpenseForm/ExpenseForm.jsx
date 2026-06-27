@@ -47,6 +47,8 @@ const categories = [
   },
 ];
 
+const datePattern = /^\d{2}\.\d{2}\.\d{4}$/;
+
 function ExpenseForm({ onAddExpense }) {
   const [title, setTitle] = useState("");
   const [active, setActive] = useState("Еда");
@@ -55,24 +57,33 @@ function ExpenseForm({ onAddExpense }) {
   const [error, setError] = useState("");
 
   const handleSubmit = async () => {
+    const trimmedTitle = title.trim();
+    const trimmedDate = date.trim();
+    const trimmedAmount = amount.trim();
+
     setError("");
 
-    if (!title.trim()) {
+    if (!trimmedTitle) {
       setError("Введите описание");
       return;
     }
 
-    if (!date.trim()) {
+    if (!trimmedDate) {
       setError("Введите дату");
       return;
     }
 
-    if (!amount.trim()) {
+    if (!datePattern.test(trimmedDate)) {
+      setError("Введите дату в формате ДД.ММ.ГГГГ");
+      return;
+    }
+
+    if (!trimmedAmount) {
       setError("Введите сумму");
       return;
     }
 
-    const preparedAmount = Number(amount.replace(/\s/g, "").replace(",", "."));
+    const preparedAmount = Number(trimmedAmount.replace(/\s/g, "").replace(",", "."));
 
     if (Number.isNaN(preparedAmount) || preparedAmount <= 0) {
       setError("Введите корректную сумму");
@@ -80,9 +91,9 @@ function ExpenseForm({ onAddExpense }) {
     }
 
     await onAddExpense({
-      title: title.trim(),
+      title: trimmedTitle,
       category: active,
-      date: date.trim(),
+      date: trimmedDate,
       amount: preparedAmount,
     });
 
@@ -121,7 +132,7 @@ function ExpenseForm({ onAddExpense }) {
 
         <Label>Дата</Label>
         <Input
-          placeholder="Введите дату"
+          placeholder="ДД.ММ.ГГГГ"
           value={date}
           onChange={(event) => setDate(event.target.value)}
         />

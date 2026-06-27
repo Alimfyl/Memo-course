@@ -1,16 +1,119 @@
-# React + Vite
+# Skypro Wallet
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Учебный проект электронного кошелька на React. Приложение позволяет зарегистрироваться, войти в аккаунт, вести список расходов и смотреть аналитику по категориям за выбранный период.
 
-Currently, two official plugins are available:
+## Стек
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- React
+- Vite
+- React Router
+- styled-components
+- Recharts
+- react-icons
+- localStorage для имитации API и хранения данных
 
-## React Compiler
+## Что реализовано
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- регистрация пользователя;
+- вход в аккаунт;
+- сохранение токена в `localStorage`;
+- защита страниц `/expenses` и `/analytics`;
+- выход из аккаунта;
+- получение списка расходов;
+- добавление нового расхода;
+- удаление расхода;
+- валидация форм входа, регистрации и добавления расхода;
+- календарь выбора периода;
+- динамическая диаграмма расходов по категориям;
+- фильтрация аналитики по выбранному периоду;
+- сохранение расходов после обновления страницы.
 
-## Expanding the ESLint configuration
+## Структура проекта
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```text
+src/
+  api/
+    authApi.js          # регистрация, вход, токен, выход
+    transactionsApi.js  # получение, добавление и удаление расходов
+    transactionApi.js   # совместимый реэкспорт для старых импортов
+  components/
+    Calendar/
+    Chart/
+    ExpenseForm/
+    ExpenseTable/
+    Header/
+  constants/
+    storageKeys.js
+  pages/
+    Analytics/
+    Expenses/
+    LoginPage/
+    RegisterPage/
+```
+
+## Установка
+
+```bash
+npm install
+```
+
+## Запуск проекта
+
+```bash
+npm run dev
+```
+
+После запуска приложение будет доступно по адресу, который покажет Vite в терминале. Обычно это:
+
+```text
+http://localhost:5173/
+```
+
+## Проверка перед сдачей
+
+```bash
+npm run lint
+npm run build
+```
+
+Обе команды должны завершаться без ошибок.
+
+## Сценарий ручной проверки
+
+1. Зарегистрировать нового пользователя.
+2. Войти под созданным пользователем.
+3. Перейти на страницу `Мои расходы`.
+4. Добавить новый расход.
+5. Удалить расход.
+6. Обновить страницу и проверить, что данные сохранились.
+7. Перейти на страницу `Анализ расходов`.
+8. Выбрать дату или период в календаре.
+9. Проверить, что сумма и диаграмма меняются по выбранному периоду.
+10. Нажать `Выйти` и убедиться, что защищённые страницы больше не открываются без входа.
+
+## Формат даты
+
+Форма добавления расхода ожидает дату в формате:
+
+```text
+ДД.ММ.ГГГГ
+```
+
+Пример:
+
+```text
+03.07.2024
+```
+
+Этот формат нужен для корректной фильтрации расходов в аналитике.
+
+## Хранение данных
+
+Проект использует `localStorage` как имитацию API:
+
+- пользователи сохраняются в `skypro_wallet_users`;
+- токен сохраняется в `skypro_wallet_token`;
+- текущий пользователь сохраняется в `skypro_wallet_current_user`;
+- расходы сохраняются в `skypro_wallet_transactions`.
+
+Если в браузере остались старые тестовые данные, можно очистить данные сайта в DevTools или через настройки браузера.
