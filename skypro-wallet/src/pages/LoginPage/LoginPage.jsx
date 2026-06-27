@@ -1,11 +1,10 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import { FiCreditCard } from "react-icons/fi";
-
-import Button from "../../components/Button/Button";
-import Input from "../../components/Input/Input";
+import { Link, useNavigate } from "react-router-dom";
 
 import { loginUser } from "../../api/authApi";
+import Button from "../../components/Button/Button";
+import Input from "../../components/Input/Input";
 
 import { Wrapper, Logo, Card, Title, Form, Bottom } from "./LoginPage.styled";
 
@@ -13,9 +12,7 @@ function LoginPage() {
   const navigate = useNavigate();
 
   const [login, setLogin] = useState("");
-
   const [password, setPassword] = useState("");
-
   const [error, setError] = useState("");
 
   const handleLogin = async () => {
@@ -52,14 +49,14 @@ function LoginPage() {
           <Input
             placeholder="Логин"
             value={login}
-            onChange={(e) => setLogin(e.target.value)}
+            onChange={(event) => setLogin(event.target.value)}
           />
 
           <Input
             type="password"
             placeholder="Пароль"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(event) => setPassword(event.target.value)}
           />
 
           {error && (

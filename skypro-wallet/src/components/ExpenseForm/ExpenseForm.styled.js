@@ -38,17 +38,19 @@ export const Category = styled.button`
   gap: 10px;
   padding: 0 18px;
   border-radius: 18px;
-  background: ${(props) => (props.$active ? "#eeeeee" : "#f2f2f2")};
-  color: #222222;
+  background: ${(props) => (props.$active ? "#eee3ff" : "#f2f2f2")};
+  color: ${(props) => (props.$active ? "#7b2ff2" : "#222222")};
   font-size: 13px;
+  font-weight: 400;
   transition: 0.2s;
 
   svg {
     font-size: 15px;
+    color: ${(props) => (props.$active ? "#7b2ff2" : "#111111")};
   }
 
   &:hover {
-    background: #e9e9e9;
+    background: ${(props) => (props.$active ? "#eee3ff" : "#e9e9e9")};
   }
 `;
 

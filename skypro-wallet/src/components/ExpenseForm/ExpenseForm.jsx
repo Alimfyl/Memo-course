@@ -47,8 +47,50 @@ const categories = [
   },
 ];
 
-function ExpenseForm() {
+function ExpenseForm({ onAddExpense }) {
+  const [title, setTitle] = useState("");
   const [active, setActive] = useState("Еда");
+  const [date, setDate] = useState("");
+  const [amount, setAmount] = useState("");
+  const [error, setError] = useState("");
+
+  const handleSubmit = async () => {
+    setError("");
+
+    if (!title.trim()) {
+      setError("Введите описание");
+      return;
+    }
+
+    if (!date.trim()) {
+      setError("Введите дату");
+      return;
+    }
+
+    if (!amount.trim()) {
+      setError("Введите сумму");
+      return;
+    }
+
+    const preparedAmount = Number(amount.replace(/\s/g, "").replace(",", "."));
+
+    if (Number.isNaN(preparedAmount) || preparedAmount <= 0) {
+      setError("Введите корректную сумму");
+      return;
+    }
+
+    await onAddExpense({
+      title: title.trim(),
+      category: active,
+      date: date.trim(),
+      amount: preparedAmount,
+    });
+
+    setTitle("");
+    setActive("Еда");
+    setDate("");
+    setAmount("");
+  };
 
   return (
     <Wrapper>
@@ -56,7 +98,11 @@ function ExpenseForm() {
 
       <Form>
         <Label>Описание</Label>
-        <Input placeholder="Введите описание" />
+        <Input
+          placeholder="Введите описание"
+          value={title}
+          onChange={(event) => setTitle(event.target.value)}
+        />
 
         <Label>Категория</Label>
         <Categories>
@@ -74,12 +120,34 @@ function ExpenseForm() {
         </Categories>
 
         <Label>Дата</Label>
-        <Input placeholder="Введите дату" />
+        <Input
+          placeholder="Введите дату"
+          value={date}
+          onChange={(event) => setDate(event.target.value)}
+        />
 
         <Label>Сумма</Label>
-        <Input placeholder="Введите сумму" />
+        <Input
+          placeholder="Введите сумму"
+          value={amount}
+          onChange={(event) => setAmount(event.target.value)}
+        />
 
-        <Submit>Добавить новый расход</Submit>
+        {error && (
+          <p
+            style={{
+              color: "red",
+              fontSize: "14px",
+              margin: 0,
+            }}
+          >
+            {error}
+          </p>
+        )}
+
+        <Submit type="button" onClick={handleSubmit}>
+          Добавить новый расход
+        </Submit>
       </Form>
     </Wrapper>
   );

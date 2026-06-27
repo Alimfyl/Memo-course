@@ -1,27 +1,14 @@
 import { useEffect, useState } from "react";
 
+import { addTransaction, deleteTransaction, getTransactions } from "../../api/transactionApi";
 import ExpenseForm from "../../components/ExpenseForm/ExpenseForm";
 import ExpenseTable from "../../components/ExpenseTable/ExpenseTable";
 import Header from "../../components/Header/Header";
 
-import {
-  addTransaction,
-  deleteTransaction,
-  getTransactions,
-} from "../../api/transactionsApi";
-
-import {
-  Wrapper,
-  Container,
-  Title,
-  Content,
-  Left,
-  Right,
-} from "./ExpensesPage.styled";
+import { Wrapper, Container, Title, Content, Left, Right } from "./ExpensesPage.styled";
 
 function ExpensesPage() {
   const [expenses, setExpenses] = useState([]);
-
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -56,9 +43,7 @@ function ExpensesPage() {
 
       await deleteTransaction(id);
 
-      setExpenses((prev) =>
-        prev.filter((item) => item.id !== id)
-      );
+      setExpenses((prev) => prev.filter((item) => item.id !== id));
     } catch {
       setError("Не удалось удалить расход");
     }
@@ -71,24 +56,15 @@ function ExpensesPage() {
       <Container>
         <Title>Мои расходы</Title>
 
-        {error && (
-          <p style={{ color: "red" }}>
-            {error}
-          </p>
-        )}
+        {error && <p style={{ color: "red" }}>{error}</p>}
 
         <Content>
           <Left>
-            <ExpenseTable
-              expenses={expenses}
-              onDelete={handleDeleteExpense}
-            />
+            <ExpenseTable expenses={expenses} onDelete={handleDeleteExpense} />
           </Left>
 
           <Right>
-            <ExpenseForm
-              onAddExpense={handleAddExpense}
-            />
+            <ExpenseForm onAddExpense={handleAddExpense} />
           </Right>
         </Content>
       </Container>
