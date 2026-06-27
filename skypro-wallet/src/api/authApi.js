@@ -17,7 +17,6 @@ export const registerUser = async ({ name, login, password }) => {
   await delay();
 
   const users = getUsers();
-
   const existingUser = users.find((user) => user.login === login);
 
   if (existingUser) {
@@ -44,7 +43,6 @@ export const loginUser = async ({ login, password }) => {
   await delay();
 
   const users = getUsers();
-
   const user = users.find(
     (item) => item.login === login && item.password === password
   );

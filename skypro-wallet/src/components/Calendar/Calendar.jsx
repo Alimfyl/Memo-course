@@ -16,6 +16,7 @@ const months = [
   {
     title: "Июль 2024",
     monthName: "июля",
+    monthNumber: 6,
     order: 0,
     startOffset: 0,
     days: Array.from({ length: 31 }, (_, i) => i + 1),
@@ -23,6 +24,7 @@ const months = [
   {
     title: "Август 2024",
     monthName: "августа",
+    monthNumber: 7,
     order: 1,
     startOffset: 3,
     days: Array.from({ length: 31 }, (_, i) => i + 1),
@@ -48,6 +50,7 @@ function Calendar({ setSelectedPeriod }) {
         return {
           day: Number(selectedDay),
           month: selectedMonth.monthName,
+          monthNumber: selectedMonth.monthNumber,
           year: 2024,
           order: selectedMonth.order,
         };

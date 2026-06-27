@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { addTransaction, deleteTransaction, getTransactions } from "../../api/transactionApi";
+import { addTransaction, deleteTransaction, getTransactions } from "../../api/transactionsApi";
 import ExpenseForm from "../../components/ExpenseForm/ExpenseForm";
 import ExpenseTable from "../../components/ExpenseTable/ExpenseTable";
 import Header from "../../components/Header/Header";

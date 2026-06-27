@@ -19,13 +19,13 @@ function LoginPage() {
     try {
       setError("");
 
-      if (!login || !password) {
+      if (!login.trim() || !password.trim()) {
         setError("Заполните логин и пароль");
         return;
       }
 
       await loginUser({
-        login,
+        login: login.trim(),
         password,
       });
 

@@ -20,14 +20,14 @@ function RegisterPage() {
     try {
       setError("");
 
-      if (!name || !login || !password) {
+      if (!name.trim() || !login.trim() || !password.trim()) {
         setError("Заполните все поля");
         return;
       }
 
       await registerUser({
-        name,
-        login,
+        name: name.trim(),
+        login: login.trim(),
         password,
       });
 
