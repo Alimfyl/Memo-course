@@ -71,6 +71,11 @@ export const Grid = styled.div`
   }
 `;
 
+export const EmptyDay = styled.div`
+  width: 100%;
+  aspect-ratio: 1;
+`;
+
 export const Day = styled.button`
   width: 100%;
   aspect-ratio: 1;

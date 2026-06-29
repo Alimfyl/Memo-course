@@ -1,76 +1,63 @@
 import { STORAGE_KEYS } from "../constants/storageKeys";
 
-const delay = (ms = 300) =>
-  new Promise((resolve) => setTimeout(resolve, ms));
+const API_URL = "https://wedev-api.sky.pro/api";
 
-const getUsers = () => {
-  const users = localStorage.getItem(STORAGE_KEYS.USERS);
+const request = async (path, options = {}) => {
+  const response = await fetch(`${API_URL}${path}`, {
+    ...options,
+    headers: {
+      ...options.headers,
+    },
+  });
 
-  return users ? JSON.parse(users) : [];
-};
+  const data = await response.json();
 
-const saveUsers = (users) => {
-  localStorage.setItem(STORAGE_KEYS.USERS, JSON.stringify(users));
-};
-
-export const registerUser = async ({ name, login, password }) => {
-  await delay();
-
-  const users = getUsers();
-  const existingUser = users.find((user) => user.login === login);
-
-  if (existingUser) {
-    throw new Error("Пользователь с таким логином уже существует");
+  if (!response.ok) {
+    throw new Error(data.error || data.message || "Ошибка запроса");
   }
 
-  const newUser = {
-    id: Date.now(),
-    name,
-    login,
-    password,
-  };
-
-  saveUsers([...users, newUser]);
-
-  return {
-    id: newUser.id,
-    name: newUser.name,
-    login: newUser.login,
-  };
+  return data;
 };
 
-export const loginUser = async ({ login, password }) => {
-  await delay();
-
-  const users = getUsers();
-  const user = users.find(
-    (item) => item.login === login && item.password === password
-  );
-
-  if (!user) {
-    throw new Error("Неверный логин или пароль");
-  }
-
-  const token = `fake-token-${user.id}-${Date.now()}`;
-
-  localStorage.setItem(STORAGE_KEYS.TOKEN, token);
+const saveAuthData = (user) => {
+  localStorage.setItem(STORAGE_KEYS.TOKEN, user.token);
   localStorage.setItem(
     STORAGE_KEYS.CURRENT_USER,
     JSON.stringify({
-      id: user.id,
+      id: user.id || user._id,
       name: user.name,
       login: user.login,
     })
   );
+};
 
-  return {
-    token,
-    user: {
-      id: user.id,
-      name: user.name,
-      login: user.login,
-    },
-  };
+export const registerUser = async ({ name, login, password }) => {
+  const data = await request("/user", {
+    method: "POST",
+    body: JSON.stringify({
+      name,
+      login,
+      password,
+    }),
+  });
+
+  saveAuthData(data.user);
+
+  return data.user;
+};
+
+export const loginUser = async ({ login, password }) => {
+  const data = await request("/user/login", {
+    method: "POST",
+    body: JSON.stringify({
+      login,
+      password,
+    }),
+  });
+
+  saveAuthData(data.user);
+
+  return data.user;
 };
 
 export const logoutUser = () => {

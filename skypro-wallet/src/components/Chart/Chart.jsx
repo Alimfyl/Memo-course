@@ -6,6 +6,7 @@ import {
   ResponsiveContainer,
   Tooltip,
   XAxis,
+  YAxis,
 } from "recharts";
 
 import { Wrapper, Amount, Subtitle } from "./Chart.styled";
@@ -61,6 +62,14 @@ function Chart({ selectedPeriod, transactions }) {
     };
   });
 
+  const maxCategoryAmount = Math.max(...data.map((item) => item.value), 0);
+  const minVisibleBarValue = maxCategoryAmount > 0 ? maxCategoryAmount * 0.04 : 0.4;
+  const maxVisibleBarValue = maxCategoryAmount > 0 ? maxCategoryAmount : 10;
+  const chartData = data.map((item) => ({
+    ...item,
+    displayValue: item.value > 0 ? item.value : minVisibleBarValue,
+  }));
+
   const firstPeriodDay = selectedPeriod[0];
   const lastPeriodDay = selectedPeriod[selectedPeriod.length - 1];
 
@@ -77,14 +86,14 @@ function Chart({ selectedPeriod, transactions }) {
 
       <Subtitle>Расходы за {periodText}</Subtitle>
 
-      <ResponsiveContainer width="100%" height={320}>
+      <ResponsiveContainer width="100%" height={365}>
         <BarChart
-          data={data}
+          data={chartData}
           margin={{
-            top: 35,
-            right: 0,
-            left: 0,
-            bottom: 0,
+            top: 42,
+            right: 10,
+            left: 10,
+            bottom: 8,
           }}
         >
           <XAxis
@@ -97,15 +106,17 @@ function Chart({ selectedPeriod, transactions }) {
               fill: "#2A2A2A",
             }}
           />
+          <YAxis hide domain={[0, maxVisibleBarValue]} />
 
           <Tooltip
+            cursor={{ fill: "transparent" }}
             formatter={(value, name, props) => [
               props.payload.label,
               "Сумма",
             ]}
           />
 
-          <Bar dataKey="value" barSize={70} radius={[18, 18, 18, 18]}>
+          <Bar dataKey="displayValue" barSize={70} radius={[12, 12, 12, 12]}>
             <LabelList
               dataKey="label"
               position="top"
@@ -116,7 +127,7 @@ function Chart({ selectedPeriod, transactions }) {
               }}
             />
 
-            {data.map((entry) => (
+            {chartData.map((entry) => (
               <Cell key={entry.name} fill={entry.color} />
             ))}
           </Bar>

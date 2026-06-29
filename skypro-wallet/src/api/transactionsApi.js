@@ -1,124 +1,124 @@
-import { STORAGE_KEYS } from "../constants/storageKeys";
+import { getToken } from "./authApi";
 
-const DEFAULT_TRANSACTIONS = [
-  {
-    id: 1,
-    title: "Пятерочка",
-    category: "Еда",
-    date: "03.07.2024",
-    amount: 3500,
-  },
-  {
-    id: 2,
-    title: "Яндекс Такси",
-    category: "Транспорт",
-    date: "03.07.2024",
-    amount: 730,
-  },
-  {
-    id: 3,
-    title: "Аптека Вита",
-    category: "Другое",
-    date: "03.07.2024",
-    amount: 1200,
-  },
-  {
-    id: 4,
-    title: "Бургер Кинг",
-    category: "Еда",
-    date: "03.07.2024",
-    amount: 950,
-  },
-];
+const API_URL = "https://wedev-api.sky.pro/api";
 
-const TEXT_FIXES = {
-  "РџСЏС‚РµСЂРѕС‡РєР°": "Пятерочка",
-  "РЇРЅРґРµРєСЃ РўР°РєСЃРё": "Яндекс Такси",
-  "РђРїС‚РµРєР° Р’РёС‚Р°": "Аптека Вита",
-  "Р‘СѓСЂРіРµСЂ РљРёРЅРі": "Бургер Кинг",
-  "Р•РґР°": "Еда",
-  "РўСЂР°РЅСЃРїРѕСЂС‚": "Транспорт",
-  "Р–РёР»СЊРµ": "Жилье",
-  "Р Р°Р·РІР»РµС‡РµРЅРёСЏ": "Развлечения",
-  "РћР±СЂР°Р·РѕРІР°РЅРёРµ": "Образование",
-  "Р”СЂСѓРіРѕРµ": "Другое",
+const CATEGORY_TO_API = {
+  Еда: "food",
+  Транспорт: "transport",
+  Жилье: "housing",
+  Развлечения: "joy",
+  Образование: "education",
+  Другое: "others",
 };
 
-const delay = (ms = 300) =>
-  new Promise((resolve) => setTimeout(resolve, ms));
+const CATEGORY_FROM_API = {
+  food: "Еда",
+  transport: "Транспорт",
+  housing: "Жилье",
+  joy: "Развлечения",
+  education: "Образование",
+  others: "Другое",
+};
 
-const normalizeTransaction = (transaction) => ({
-  ...transaction,
-  title: TEXT_FIXES[transaction.title] || transaction.title,
-  category: TEXT_FIXES[transaction.category] || transaction.category,
-  amount: Number(transaction.amount),
-});
+const request = async (path, options = {}) => {
+  const token = getToken();
 
-const getStorageTransactions = () => {
-  const data = localStorage.getItem(STORAGE_KEYS.TRANSACTIONS);
-
-  if (!data) {
-    localStorage.setItem(
-      STORAGE_KEYS.TRANSACTIONS,
-      JSON.stringify(DEFAULT_TRANSACTIONS)
-    );
-
-    return DEFAULT_TRANSACTIONS;
+  if (!token) {
+    throw new Error("Необходимо войти в аккаунт");
   }
 
-  const transactions = JSON.parse(data).map(normalizeTransaction);
+  const response = await fetch(`${API_URL}${path}`, {
+    ...options,
+    headers: {
+      Authorization: `Bearer ${token}`,
+      ...options.headers,
+    },
+  });
 
-  localStorage.setItem(
-    STORAGE_KEYS.TRANSACTIONS,
-    JSON.stringify(transactions)
-  );
+  const data = await response.json();
 
-  return transactions;
+  if (!response.ok) {
+    throw new Error(data.error || data.message || "Ошибка запроса");
+  }
+
+  return data;
 };
 
-const saveTransactions = (transactions) => {
-  localStorage.setItem(
-    STORAGE_KEYS.TRANSACTIONS,
-    JSON.stringify(transactions)
-  );
+const formatDateFromApi = (date) => {
+  const parsedDate = new Date(date);
+  const day = String(parsedDate.getUTCDate()).padStart(2, "0");
+  const month = String(parsedDate.getUTCMonth() + 1).padStart(2, "0");
+  const year = parsedDate.getUTCFullYear();
+
+  return `${day}.${month}.${year}`;
 };
 
-export const getTransactions = async () => {
-  await delay();
+const formatDateToApi = (date) => {
+  const [day, month, year] = date.split(".");
 
-  return getStorageTransactions();
+  return `${month}-${day}-${year}`;
+};
+
+const normalizeTransaction = (transaction) => ({
+  id: transaction._id,
+  title: transaction.description,
+  category: CATEGORY_FROM_API[transaction.category] || transaction.category,
+  categoryCode: transaction.category,
+  date: formatDateFromApi(transaction.date),
+  amount: Number(transaction.sum),
+});
+
+const normalizeTransactions = (transactions) => {
+  return transactions.map(normalizeTransaction);
+};
+
+export const getTransactions = async (params = {}) => {
+  const searchParams = new URLSearchParams();
+
+  if (params.sortBy) {
+    searchParams.set("sortBy", params.sortBy);
+  }
+
+  if (params.filterBy?.length) {
+    searchParams.set("filterBy", params.filterBy.join(","));
+  }
+
+  const query = searchParams.toString();
+  const transactions = await request(`/transactions${query ? `?${query}` : ""}`);
+
+  return normalizeTransactions(transactions);
+};
+
+export const getTransactionsByPeriod = async ({ start, end }) => {
+  const transactions = await request("/transactions/period", {
+    method: "POST",
+    body: JSON.stringify({
+      start: formatDateToApi(start),
+      end: formatDateToApi(end),
+    }),
+  });
+
+  return normalizeTransactions(transactions);
 };
 
 export const addTransaction = async (transaction) => {
-  await delay();
-
-  const transactions = getStorageTransactions();
-
-  const newTransaction = normalizeTransaction({
-    id: Date.now(),
-    ...transaction,
+  const data = await request("/transactions", {
+    method: "POST",
+    body: JSON.stringify({
+      description: transaction.title,
+      sum: Number(transaction.amount),
+      category: CATEGORY_TO_API[transaction.category],
+      date: formatDateToApi(transaction.date),
+    }),
   });
 
-  const updatedTransactions = [
-    newTransaction,
-    ...transactions,
-  ];
-
-  saveTransactions(updatedTransactions);
-
-  return newTransaction;
+  return normalizeTransactions(data.transactions);
 };
 
 export const deleteTransaction = async (id) => {
-  await delay();
+  const data = await request(`/transactions/${id}`, {
+    method: "DELETE",
+  });
 
-  const transactions = getStorageTransactions();
-
-  const updatedTransactions = transactions.filter(
-    (transaction) => transaction.id !== id
-  );
-
-  saveTransactions(updatedTransactions);
-
-  return id;
+  return normalizeTransactions(data.transactions);
 };

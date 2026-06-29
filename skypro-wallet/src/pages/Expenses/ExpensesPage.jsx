@@ -14,11 +14,13 @@ function ExpensesPage() {
   useEffect(() => {
     const loadTransactions = async () => {
       try {
-        const data = await getTransactions();
+        const data = await getTransactions({
+          sortBy: "date",
+        });
 
         setExpenses(data);
-      } catch {
-        setError("Не удалось загрузить расходы");
+      } catch (err) {
+        setError(err.message || "Не удалось загрузить расходы");
       }
     };
 
@@ -29,11 +31,11 @@ function ExpensesPage() {
     try {
       setError("");
 
-      const newExpense = await addTransaction(expense);
+      const updatedExpenses = await addTransaction(expense);
 
-      setExpenses((prev) => [newExpense, ...prev]);
-    } catch {
-      setError("Не удалось добавить расход");
+      setExpenses(updatedExpenses);
+    } catch (err) {
+      setError(err.message || "Не удалось добавить расход");
     }
   };
 
@@ -41,11 +43,11 @@ function ExpensesPage() {
     try {
       setError("");
 
-      await deleteTransaction(id);
+      const updatedExpenses = await deleteTransaction(id);
 
-      setExpenses((prev) => prev.filter((item) => item.id !== id));
-    } catch {
-      setError("Не удалось удалить расход");
+      setExpenses(updatedExpenses);
+    } catch (err) {
+      setError(err.message || "Не удалось удалить расход");
     }
   };
 

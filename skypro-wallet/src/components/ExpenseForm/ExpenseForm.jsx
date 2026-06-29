@@ -68,6 +68,11 @@ function ExpenseForm({ onAddExpense }) {
       return;
     }
 
+    if (trimmedTitle.length < 4) {
+      setError("Описание должно быть не короче 4 символов");
+      return;
+    }
+
     if (!trimmedDate) {
       setError("Введите дату");
       return;
@@ -85,8 +90,8 @@ function ExpenseForm({ onAddExpense }) {
 
     const preparedAmount = Number(trimmedAmount.replace(/\s/g, "").replace(",", "."));
 
-    if (Number.isNaN(preparedAmount) || preparedAmount <= 0) {
-      setError("Введите корректную сумму");
+    if (!Number.isInteger(preparedAmount) || preparedAmount <= 0) {
+      setError("Введите корректную сумму целым числом");
       return;
     }
 
