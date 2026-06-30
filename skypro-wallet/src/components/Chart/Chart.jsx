@@ -1,49 +1,78 @@
-import { Bar, BarChart, Cell, LabelList, ResponsiveContainer, Tooltip, XAxis } from "recharts";
+import {
+  Bar,
+  BarChart,
+  Cell,
+  LabelList,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
 
 import { Wrapper, Amount, Subtitle } from "./Chart.styled";
 
-const data = [
+const categories = [
   {
     name: "Еда",
-    value: 3590,
-    label: "3 590 ₽",
     color: "#CDB2FF",
   },
   {
     name: "Транспорт",
-    value: 1835,
-    label: "1 835 ₽",
     color: "#F7B733",
   },
   {
     name: "Жилье",
-    value: 35,
-    label: "0 ₽",
     color: "#7DD3FC",
   },
   {
     name: "Развлечения",
-    value: 1250,
-    label: "1 250 ₽",
     color: "#A78BFA",
   },
   {
     name: "Образование",
-    value: 600,
-    label: "600 ₽",
     color: "#B8E986",
   },
   {
     name: "Другое",
-    value: 2306,
-    label: "2 306 ₽",
     color: "#F6B0C8",
   },
 ];
 
-function Chart({ selectedPeriod }) {
+const formatMoney = (value) => {
+  return `${Number(value).toLocaleString("ru-RU")} ₽`;
+};
+
+function Chart({ selectedPeriod, transactions }) {
+  const totalAmount = transactions.reduce((sum, transaction) => {
+    return sum + Number(transaction.amount);
+  }, 0);
+
+  const data = categories.map((category) => {
+    const categoryAmount = transactions
+      .filter((transaction) => transaction.category === category.name)
+      .reduce((sum, transaction) => {
+        return sum + Number(transaction.amount);
+      }, 0);
+
+    return {
+      name: category.name,
+      value: categoryAmount,
+      label: formatMoney(categoryAmount),
+      color: category.color,
+    };
+  });
+
+  const maxCategoryAmount = Math.max(...data.map((item) => item.value), 0);
+  const minVisibleBarValue = maxCategoryAmount > 0 ? maxCategoryAmount * 0.04 : 0.4;
+  const maxVisibleBarValue = maxCategoryAmount > 0 ? maxCategoryAmount : 10;
+  const chartData = data.map((item) => ({
+    ...item,
+    displayValue: item.value > 0 ? item.value : minVisibleBarValue,
+  }));
+
   const firstPeriodDay = selectedPeriod[0];
   const lastPeriodDay = selectedPeriod[selectedPeriod.length - 1];
+
   const periodText =
     selectedPeriod.length === 0
       ? "выбранный период"
@@ -53,18 +82,18 @@ function Chart({ selectedPeriod }) {
 
   return (
     <Wrapper>
-      <Amount>9 581 ₽</Amount>
+      <Amount>{formatMoney(totalAmount)}</Amount>
 
       <Subtitle>Расходы за {periodText}</Subtitle>
 
-      <ResponsiveContainer width="100%" height={320}>
+      <ResponsiveContainer width="100%" height={365}>
         <BarChart
-          data={data}
+          data={chartData}
           margin={{
-            top: 35,
-            right: 0,
-            left: 0,
-            bottom: 0,
+            top: 42,
+            right: 10,
+            left: 10,
+            bottom: 8,
           }}
         >
           <XAxis
@@ -77,10 +106,17 @@ function Chart({ selectedPeriod }) {
               fill: "#2A2A2A",
             }}
           />
+          <YAxis hide domain={[0, maxVisibleBarValue]} />
 
-          <Tooltip formatter={(value, name, props) => [props.payload.label, "Сумма"]} />
+          <Tooltip
+            cursor={{ fill: "transparent" }}
+            formatter={(value, name, props) => [
+              props.payload.label,
+              "Сумма",
+            ]}
+          />
 
-          <Bar dataKey="value" barSize={70} radius={[18, 18, 18, 18]}>
+          <Bar dataKey="displayValue" barSize={70} radius={[12, 12, 12, 12]}>
             <LabelList
               dataKey="label"
               position="top"
@@ -91,7 +127,7 @@ function Chart({ selectedPeriod }) {
               }}
             />
 
-            {data.map((entry) => (
+            {chartData.map((entry) => (
               <Cell key={entry.name} fill={entry.color} />
             ))}
           </Bar>
