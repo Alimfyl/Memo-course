@@ -47,7 +47,11 @@ const categories = [
   },
 ];
 
-const datePattern = /^\d{2}\.\d{2}\.\d{4}$/;
+const formatDateForApi = (date) => {
+  const [year, month, day] = date.split("-");
+
+  return `${day}.${month}.${year}`;
+};
 
 function ExpenseForm({ onAddExpense }) {
   const [title, setTitle] = useState("");
@@ -78,11 +82,6 @@ function ExpenseForm({ onAddExpense }) {
       return;
     }
 
-    if (!datePattern.test(trimmedDate)) {
-      setError("Введите дату в формате ДД.ММ.ГГГГ");
-      return;
-    }
-
     if (!trimmedAmount) {
       setError("Введите сумму");
       return;
@@ -98,7 +97,7 @@ function ExpenseForm({ onAddExpense }) {
     await onAddExpense({
       title: trimmedTitle,
       category: active,
-      date: trimmedDate,
+      date: formatDateForApi(trimmedDate),
       amount: preparedAmount,
     });
 
@@ -137,7 +136,7 @@ function ExpenseForm({ onAddExpense }) {
 
         <Label>Дата</Label>
         <Input
-          placeholder="ДД.ММ.ГГГГ"
+          type="date"
           value={date}
           onChange={(event) => setDate(event.target.value)}
         />
