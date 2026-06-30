@@ -1,10 +1,18 @@
-import { useLocation } from "react-router-dom";
 import { FiCreditCard } from "react-icons/fi";
+import { useLocation, useNavigate } from "react-router-dom";
+
+import { logoutUser } from "../../api/authApi";
 
 import { Container, Logo, Navigation, NavLink, Logout } from "./Header.styled";
 
 function Header() {
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logoutUser();
+    navigate("/login");
+  };
 
   return (
     <Container>
@@ -29,7 +37,9 @@ function Header() {
         </NavLink>
       </Navigation>
 
-      <Logout to="/login">Выйти</Logout>
+      <Logout as="button" onClick={handleLogout}>
+        Выйти
+      </Logout>
     </Container>
   );
 }

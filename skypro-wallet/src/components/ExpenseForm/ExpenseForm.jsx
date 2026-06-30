@@ -47,8 +47,66 @@ const categories = [
   },
 ];
 
-function ExpenseForm() {
+const datePattern = /^\d{2}\.\d{2}\.\d{4}$/;
+
+function ExpenseForm({ onAddExpense }) {
+  const [title, setTitle] = useState("");
   const [active, setActive] = useState("Еда");
+  const [date, setDate] = useState("");
+  const [amount, setAmount] = useState("");
+  const [error, setError] = useState("");
+
+  const handleSubmit = async () => {
+    const trimmedTitle = title.trim();
+    const trimmedDate = date.trim();
+    const trimmedAmount = amount.trim();
+
+    setError("");
+
+    if (!trimmedTitle) {
+      setError("Введите описание");
+      return;
+    }
+
+    if (trimmedTitle.length < 4) {
+      setError("Описание должно быть не короче 4 символов");
+      return;
+    }
+
+    if (!trimmedDate) {
+      setError("Введите дату");
+      return;
+    }
+
+    if (!datePattern.test(trimmedDate)) {
+      setError("Введите дату в формате ДД.ММ.ГГГГ");
+      return;
+    }
+
+    if (!trimmedAmount) {
+      setError("Введите сумму");
+      return;
+    }
+
+    const preparedAmount = Number(trimmedAmount.replace(/\s/g, "").replace(",", "."));
+
+    if (!Number.isInteger(preparedAmount) || preparedAmount <= 0) {
+      setError("Введите корректную сумму целым числом");
+      return;
+    }
+
+    await onAddExpense({
+      title: trimmedTitle,
+      category: active,
+      date: trimmedDate,
+      amount: preparedAmount,
+    });
+
+    setTitle("");
+    setActive("Еда");
+    setDate("");
+    setAmount("");
+  };
 
   return (
     <Wrapper>
@@ -56,7 +114,11 @@ function ExpenseForm() {
 
       <Form>
         <Label>Описание</Label>
-        <Input placeholder="Введите описание" />
+        <Input
+          placeholder="Введите описание"
+          value={title}
+          onChange={(event) => setTitle(event.target.value)}
+        />
 
         <Label>Категория</Label>
         <Categories>
@@ -74,12 +136,34 @@ function ExpenseForm() {
         </Categories>
 
         <Label>Дата</Label>
-        <Input placeholder="Введите дату" />
+        <Input
+          placeholder="ДД.ММ.ГГГГ"
+          value={date}
+          onChange={(event) => setDate(event.target.value)}
+        />
 
         <Label>Сумма</Label>
-        <Input placeholder="Введите сумму" />
+        <Input
+          placeholder="Введите сумму"
+          value={amount}
+          onChange={(event) => setAmount(event.target.value)}
+        />
 
-        <Submit>Добавить новый расход</Submit>
+        {error && (
+          <p
+            style={{
+              color: "red",
+              fontSize: "14px",
+              margin: 0,
+            }}
+          >
+            {error}
+          </p>
+        )}
+
+        <Submit type="button" onClick={handleSubmit}>
+          Добавить новый расход
+        </Submit>
       </Form>
     </Wrapper>
   );

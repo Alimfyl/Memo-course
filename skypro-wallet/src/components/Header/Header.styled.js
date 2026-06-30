@@ -46,9 +46,14 @@ export const Navigation = styled.nav`
 
 export const NavLink = styled(Link)`
   position: relative;
+
   color: #222222;
+
   font-size: 15px;
+
   font-weight: 400;
+
+  text-decoration: none;
 
   &.active {
     color: #7b2ff2;
@@ -56,17 +61,37 @@ export const NavLink = styled(Link)`
 
   &.active::after {
     position: absolute;
+
     bottom: -6px;
+
     left: 0;
+
     width: 100%;
+
     height: 1px;
+
     background: #7b2ff2;
+
     content: "";
   }
 `;
 
-export const Logout = styled(Link)`
+export const Logout = styled.button`
+  border: none;
+
+  background: transparent;
+
   color: #111111;
+
   font-size: 15px;
+
   font-weight: 700;
+
+  cursor: pointer;
+
+  padding: 0;
+
+  &:hover {
+    color: #7b2ff2;
+  }
 `;
